@@ -2,17 +2,22 @@ package br.com.personal.webhookreceiver.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 @JsonIgnoreProperties(value = {
-        "id",
-        "description",
         "avatar_url",
         "git_ssh_url",
         "git_http_url",
         "namespace",
         "visibility_level",
         "path_with_namespace",
-        "default_branch",
         "ci_config_path",
         "homepage",
         "url",
@@ -21,24 +26,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 })
 public class Project {
 
-    private String name;
+    @Id
+    @Getter @Setter private Long id;
+
+    @Getter @Setter private String name;
+
+    @Getter @Setter private String description;
 
     @JsonProperty("web_url")
-    private String webUrl;
+    @Getter @Setter private String webUrl;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getWebUrl() {
-        return webUrl;
-    }
-
-    public void setWebUrl(String webUrl) {
-        this.webUrl = webUrl;
-    }
+    @JsonProperty("default_branch")
+    @Getter @Setter private String defaultBranch;
 }

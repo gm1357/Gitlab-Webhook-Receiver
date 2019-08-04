@@ -2,55 +2,51 @@ package br.com.personal.webhookreceiver.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.engine.internal.Cascade;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 @JsonIgnoreProperties(value = {
         "object_kind",
         "event_name",
         "before",
         "after",
         "ref",
-        "checkout_sha",
         "message",
         "user_id",
-        "user_username",
-        "user_email",
         "user_avatar",
         "project_id",
-        "total_commits_count",
         "push_options",
         "repository"
 })
 public class PushEvent {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Getter @Setter private Long id;
+
     @JsonProperty("user_name")
-    private String userName;
-    private Project project;
+    @Getter @Setter private String userFullName;
 
-    public List<Commit> getCommits() {
-        return commits;
-    }
+    @JsonProperty("user_username")
+    @Getter @Setter private String userName;
 
-    public void setCommits(List<Commit> commits) {
-        this.commits = commits;
-    }
+    @JsonProperty("user_email")
+    @Getter @Setter private String userEmail;
 
-    private List<Commit> commits;
+    @ManyToOne
+    @Getter @Setter private Project project;
 
-    public Project getProject() {
-        return project;
-    }
+    @OneToMany
+    @Getter @Setter private List<Commit> commits;
 
-    public void setProject(Project project) {
-        this.project = project;
-    }
+    @JsonProperty("checkout_sha")
+    @Getter @Setter private String checkouSha;
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+    @JsonProperty("total_commits_count")
+    @Getter @Setter private int totalCommits;
 }

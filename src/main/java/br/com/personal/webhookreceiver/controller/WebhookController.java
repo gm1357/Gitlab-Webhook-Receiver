@@ -1,8 +1,15 @@
 package br.com.personal.webhookreceiver.controller;
 
+import br.com.personal.webhookreceiver.model.Author;
 import br.com.personal.webhookreceiver.model.Commit;
 import br.com.personal.webhookreceiver.model.PushEvent;
+import br.com.personal.webhookreceiver.repository.AuthorRepository;
+import br.com.personal.webhookreceiver.repository.CommitRepository;
+import br.com.personal.webhookreceiver.repository.ProjectRepository;
+import br.com.personal.webhookreceiver.repository.PushEventRepository;
+import br.com.personal.webhookreceiver.service.WebhookService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,13 +20,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.IOException;
 
 @Controller
-public class webhookController {
+public class WebhookController {
 
-    @GetMapping("/")
-    @ResponseBody
-    public String webhook() {
-        return "teste";
-    }
+    @Autowired
+    private WebhookService webhookService;
 
     @PostMapping("/")
     @ResponseBody
@@ -28,17 +32,12 @@ public class webhookController {
         System.out.println(jsonString);
 
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
+            PushEvent push = webhookService.getPushEvent(jsonString);
+            webhookService.saveInDataBase(push);
 
-            PushEvent push = objectMapper.readValue(jsonString, PushEvent.class);
-
-            System.out.println(push.getProject().getName());
-
-            for (Commit commit : push.getCommits()) {
-                System.out.println(commit.getMessage());
-            }
         } catch (IOException e) {
             e.printStackTrace();
+            return HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
         return HttpStatus.OK;
