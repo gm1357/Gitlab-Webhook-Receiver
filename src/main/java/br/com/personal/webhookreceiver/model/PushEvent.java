@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.engine.internal.Cascade;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,8 +19,7 @@ import java.util.List;
         "user_id",
         "user_avatar",
         "project_id",
-        "push_options",
-        "repository"
+        "push_options"
 })
 public class PushEvent {
 
@@ -49,4 +47,7 @@ public class PushEvent {
 
     @JsonProperty("total_commits_count")
     @Getter @Setter private int totalCommits;
+
+    @ManyToOne
+    @Getter @Setter private gitRepository repository;
 }

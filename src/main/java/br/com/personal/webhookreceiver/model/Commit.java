@@ -1,20 +1,16 @@
 package br.com.personal.webhookreceiver.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@JsonIgnoreProperties(value = {
-        "added",
-        "modified",
-        "removed"
-})
 public class Commit {
 
     @Id
@@ -33,4 +29,13 @@ public class Commit {
 
     @ManyToOne
     @Getter @Setter private Author author;
+
+    @ElementCollection
+    @Getter @Setter private List<String> added = new ArrayList<>();
+
+    @ElementCollection
+    @Getter @Setter private List<String> modified = new ArrayList<>();
+
+    @ElementCollection
+    @Getter @Setter private List<String> removed = new ArrayList<>();
 }

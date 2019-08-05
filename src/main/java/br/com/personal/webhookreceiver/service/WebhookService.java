@@ -2,10 +2,8 @@ package br.com.personal.webhookreceiver.service;
 
 import br.com.personal.webhookreceiver.model.Author;
 import br.com.personal.webhookreceiver.model.PushEvent;
-import br.com.personal.webhookreceiver.repository.AuthorRepository;
-import br.com.personal.webhookreceiver.repository.CommitRepository;
-import br.com.personal.webhookreceiver.repository.ProjectRepository;
-import br.com.personal.webhookreceiver.repository.PushEventRepository;
+import br.com.personal.webhookreceiver.model.gitRepository;
+import br.com.personal.webhookreceiver.repository.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +16,9 @@ public class WebhookService {
 
     @Autowired
     private PushEventRepository pushEventRepository;
+
+    @Autowired
+    private gitRepositoryRepository gitRepositoryRepository;
 
     @Autowired
     private ProjectRepository projectRepository;
@@ -44,6 +45,14 @@ public class WebhookService {
 
             commitRepository.save(commit);
         });
+
+        gitRepository repository = gitRepositoryRepository.findByUrl(push.getRepository().getUrl());
+
+        if (repository == null) {
+            gitRepositoryRepository.save(push.getRepository());
+        } else {
+            push.getRepository().setId(repository.getId());
+        }
 
         pushEventRepository.save(push);
     }

@@ -28,7 +28,6 @@ public class WebhookController {
     @PostMapping("/")
     @ResponseBody
     public HttpStatus receiver(@RequestBody String jsonString) {
-        System.out.println("WebHook recebido!");
         System.out.println(jsonString);
 
         try {
