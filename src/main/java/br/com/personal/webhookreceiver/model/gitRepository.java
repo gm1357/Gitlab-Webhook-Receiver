@@ -3,12 +3,12 @@ package br.com.personal.webhookreceiver.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
+@Data
 @JsonIgnoreProperties(value = {
         "git_http_url",
         "git_ssh_url",
@@ -18,17 +18,17 @@ public class gitRepository {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonIgnore
-    @Getter @Setter private Long id;
+    private Long id;
 
-    @Getter @Setter private String name;
+    private String name;
 
     @Column(unique = true)
-    @Getter @Setter private String url;
+    private String url;
 
-    @Getter @Setter private String description;
+    private String description;
 
-    @Getter @Setter private String homepage;
+    private String homepage;
 
     @JsonProperty("visibility_level")
-    @Getter @Setter private int vibilityLevel;
+    private int vibilityLevel;
 }

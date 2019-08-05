@@ -1,21 +1,21 @@
 package br.com.personal.webhookreceiver.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
+@Data
 public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonIgnore
-    @Getter @Setter private Long id;
+    private Long id;
 
-    @Getter @Setter private String name;
+    private String name;
 
     @Column(unique = true)
-    @Getter @Setter private String email;
+    private String email;
 }

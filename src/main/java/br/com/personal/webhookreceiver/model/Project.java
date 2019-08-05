@@ -2,13 +2,13 @@ package br.com.personal.webhookreceiver.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
+@Data
 @JsonIgnoreProperties(value = {
         "avatar_url",
         "git_ssh_url",
@@ -25,15 +25,15 @@ import javax.persistence.Id;
 public class Project {
 
     @Id
-    @Getter @Setter private Long id;
+    private Long id;
 
-    @Getter @Setter private String name;
+    private String name;
 
-    @Getter @Setter private String description;
+    private String description;
 
     @JsonProperty("web_url")
-    @Getter @Setter private String webUrl;
+    private String webUrl;
 
     @JsonProperty("default_branch")
-    @Getter @Setter private String defaultBranch;
+    private String defaultBranch;
 }
