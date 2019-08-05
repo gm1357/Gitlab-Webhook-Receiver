@@ -46,7 +46,7 @@ public class PushEvent {
     @Getter @Setter private String checkouSha;
 
     @JsonProperty("total_commits_count")
-    @Getter @Setter private int totalCommits;
+    @Getter @Setter private Integer totalCommits;
 
     @ManyToOne
     @Getter @Setter private gitRepository repository;

@@ -1,23 +1,19 @@
 package br.com.personal.webhookreceiver.controller;
 
-import br.com.personal.webhookreceiver.model.Author;
-import br.com.personal.webhookreceiver.model.Commit;
 import br.com.personal.webhookreceiver.model.PushEvent;
-import br.com.personal.webhookreceiver.repository.AuthorRepository;
-import br.com.personal.webhookreceiver.repository.CommitRepository;
-import br.com.personal.webhookreceiver.repository.ProjectRepository;
-import br.com.personal.webhookreceiver.repository.PushEventRepository;
+import br.com.personal.webhookreceiver.service.EmailService;
 import br.com.personal.webhookreceiver.service.WebhookService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
+
+import static java.time.LocalDate.now;
 
 @Controller
 public class WebhookController {
@@ -25,28 +21,32 @@ public class WebhookController {
     @Autowired
     private WebhookService webhookService;
 
+    @Autowired
+    private EmailService emailService;
+
     @PostMapping("/")
     @ResponseBody
-    public HttpStatus receiver(@RequestBody String jsonString) {
+    public ResponseEntity receiver(@RequestBody String jsonString) {
         System.out.println(jsonString);
 
         try {
             PushEvent push = webhookService.getPushEvent(jsonString);
             webhookService.saveInDataBase(push);
+            emailService.sendNotificationEmail(push);
 
         } catch (IOException e) {
             e.printStackTrace();
-            return HttpStatus.INTERNAL_SERVER_ERROR;
+            return ResponseEntity.badRequest().body(e);
         }
 
-        return HttpStatus.OK;
+        return ResponseEntity.ok(now());
     }
 
     @PostMapping("/tag")
     @ResponseBody
-    public HttpStatus receiverTag(@RequestBody String jsonString) {
+    public ResponseEntity receiverTag(@RequestBody String jsonString) {
         System.out.println(jsonString);
 
-        return HttpStatus.OK;
+        return ResponseEntity.ok(now());
     }
 }
