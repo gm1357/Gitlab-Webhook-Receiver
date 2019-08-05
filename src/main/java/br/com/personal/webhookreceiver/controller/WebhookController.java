@@ -4,7 +4,6 @@ import br.com.personal.webhookreceiver.model.PushEvent;
 import br.com.personal.webhookreceiver.service.EmailService;
 import br.com.personal.webhookreceiver.service.WebhookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,14 +37,6 @@ public class WebhookController {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(e);
         }
-
-        return ResponseEntity.ok(now());
-    }
-
-    @PostMapping("/tag")
-    @ResponseBody
-    public ResponseEntity receiverTag(@RequestBody String jsonString) {
-        System.out.println(jsonString);
 
         return ResponseEntity.ok(now());
     }
