@@ -2,6 +2,7 @@ package br.com.personal.webhookreceiver.service;
 
 import br.com.personal.webhookreceiver.model.PushEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
@@ -13,11 +14,14 @@ public class EmailService {
     @Autowired
     private JavaMailSender javaMailSender;
 
+    @Value("${email.to}")
+    private String emailTo;
+
     @Async
     public void sendNotificationEmail(PushEvent push) {
 
         SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo("g_machado1@hotmail.com");
+        msg.setTo(emailTo);
 
         msg.setSubject("Novo push feito no projeto " + push.getProject().getName());
 

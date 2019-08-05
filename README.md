@@ -10,7 +10,7 @@ For building and running the application you need:
 
 ## Running the application locally
 
-Firstly you need to change the configuration on the `aplication.properties` file to correspond to you database and smtp information.
+Firstly you need to change the configuration on the `aplication.properties` file to correspond to you database, smtp information and the email to receive the message.
 
 Then, you can either:
 
