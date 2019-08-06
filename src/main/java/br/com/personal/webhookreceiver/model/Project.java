@@ -9,19 +9,7 @@ import javax.persistence.Id;
 
 @Entity
 @Data
-@JsonIgnoreProperties(value = {
-        "avatar_url",
-        "git_ssh_url",
-        "git_http_url",
-        "namespace",
-        "visibility_level",
-        "path_with_namespace",
-        "ci_config_path",
-        "homepage",
-        "url",
-        "ssh_url",
-        "http_url"
-})
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Project {
 
     @Id

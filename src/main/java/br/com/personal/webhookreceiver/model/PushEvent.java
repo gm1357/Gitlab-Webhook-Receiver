@@ -9,18 +9,7 @@ import java.util.List;
 
 @Entity
 @Data
-@JsonIgnoreProperties(value = {
-        "object_kind",
-        "event_name",
-        "before",
-        "after",
-        "ref",
-        "message",
-        "user_id",
-        "user_avatar",
-        "project_id",
-        "push_options"
-})
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PushEvent {
 
     @Id

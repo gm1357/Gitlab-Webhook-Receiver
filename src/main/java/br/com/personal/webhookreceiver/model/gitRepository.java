@@ -9,10 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@JsonIgnoreProperties(value = {
-        "git_http_url",
-        "git_ssh_url",
-})
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class gitRepository {
 
     @Id
