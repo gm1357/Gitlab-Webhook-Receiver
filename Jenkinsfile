@@ -1,9 +1,14 @@
 pipeline {
-    agent { docker { image 'maven:3.6.0' } }
+    agent any
     stages {
+        stage('clean') {
+            steps {
+                sh './mvnw clean'
+            }
+        }
         stage('build') {
             steps {
-                sh 'mvn package'
+                sh './mvnw package'
             }
         }
     }
